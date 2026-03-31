@@ -1,64 +1,64 @@
 # Encrypt-Decrypt Go
 
-Um projeto Go simples para demonstrar criptografia e descriptografia de texto usando AES (Advanced Encryption Standard) com modo CFB (Cipher Feedback).
+A simple Go project to demonstrate text encryption and decryption using AES (Advanced Encryption Standard) with CFB (Cipher Feedback) mode.
 
-## Funcionalidades
+## Features
 
-- **Criptografia**: Criptografa texto usando AES-256 com modo CFB
-- **Descriptografia**: Descriptografa o texto de volta ao seu formato original
-- **Base64 Encoding**: Codifica o resultado criptografado em Base64 para transporte seguro
+- **Encryption**: Encrypts text using AES-256 with CFB mode
+- **Decryption**: Decrypts text back to its original format
+- **Base64 Encoding**: Encodes encrypted result in Base64 for secure transport
 
-## Estrutura do Projeto
+## Project Structure
 
 ```
 encrypt-decrypt-go/
-├── main.go              # Arquivo principal com exemplo de uso
+├── main.go              # Main file with usage example
 ├── functions/
-│   ├── encrypting.go    # Funções de criptografia
-│   └── decrypting.go    # Funções de descriptografia
-├── go.mod              # Módulo Go
-├── go.sum              # Dependências
-└── .env                # Variáveis de ambiente (não incluído no repositório)
+│   ├── encrypting.go    # Encryption functions
+│   └── decrypting.go    # Decryption functions
+├── go.mod              # Go module
+├── go.sum              # Dependencies
+└── .env                # Environment variables (not included in repository)
 ```
 
-## Pré-requisitos
+## Prerequisites
 
-- Go 1.19 ou superior
-- Variável de ambiente `MySecret` configurada no arquivo `.env`
+- Go 1.19 or higher
+- `MySecret` environment variable configured in `.env` file
 
-## Instalação
+## Installation
 
-1. Clone o repositório:
+1. Clone the repository:
 ```bash
-git clone <repositório-url>
+git clone <repository-url>
 cd encrypt-decrypt-go
 ```
 
-2. Instale as dependências:
+2. Install dependencies:
 ```bash
 go mod tidy
 ```
 
-3. Crie um arquivo `.env` com sua chave secreta:
+3. Create a `.env` file with your secret key:
 ```
-MySecret=sua-chave-secreta-aqui-deve-ter-32-bytes
+MySecret=your-secret-key-here-must-be-32-bytes
 ```
 
-## Uso
+## Usage
 
-### Executar o exemplo
+### Run the example
 
 ```bash
 go run main.go
 ```
 
-O programa irá:
-1. Criptografar a string "Encrypting this string"
-2. Exibir o texto criptografado
-3. Descriptografar um exemplo hardcoded
-4. Exibir o texto descriptografado
+The program will:
+1. Encrypt the string "Encrypting this string"
+2. Display the encrypted text
+3. Decrypt a hardcoded example
+4. Display the decrypted text
 
-### Usar as funções no seu código
+### Use the functions in your code
 
 ```go
 package main
@@ -69,52 +69,52 @@ import (
 )
 
 func main() {
-    // Chave secreta (32 bytes para AES-256)
-    secret := "sua-chave-secreta-de-32-bytes-exato"
+    // Secret key (32 bytes for AES-256)
+    secret := "your-32-byte-secret-key-exactly-32"
     
-    // IV (Initialization Vector) - deve ser único para cada criptografia
+    // IV (Initialization Vector) - should be unique for each encryption
     iv := []byte{35, 46, 57, 24, 85, 35, 24, 74, 87, 35, 88, 98, 66, 32, 14, 05}
     
-    // Criptografar
-    original := "Texto secreto"
+    // Encrypt
+    original := "Secret text"
     encrypted, err := functions.Encrypt(original, secret, iv)
     if err != nil {
         panic(err)
     }
-    fmt.Printf("Criptografado: %s\n", encrypted)
+    fmt.Printf("Encrypted: %s\n", encrypted)
     
-    // Descriptografar
+    // Decrypt
     decrypted, err := functions.Decrypt(encrypted, secret, iv)
     if err != nil {
         panic(err)
     }
-    fmt.Printf("Descriptografado: %s\n", decrypted)
+    fmt.Printf("Decrypted: %s\n", decrypted)
 }
 ```
 
-## Detalhes Técnicos
+## Technical Details
 
-- **Algoritmo**: AES-256 (Advanced Encryption Standard)
-- **Modo**: CFB (Cipher Feedback)
-- **Encoding**: Base64 para representação segura do resultado
-- **Chave**: Requer exatamente 32 bytes para AES-256
-- **IV**: 16 bytes para AES no modo CFB
+- **Algorithm**: AES-256 (Advanced Encryption Standard)
+- **Mode**: CFB (Cipher Feedback)
+- **Encoding**: Base64 for secure result representation
+- **Key**: Requires exactly 32 bytes for AES-256
+- **IV**: 16 bytes for AES in CFB mode
 
-## Segurança
+## Security
 
-- A chave secreta deve ter exatamente 32 caracteres/bytes
-- O IV (Initialization Vector) deve ser único para cada operação de criptografia
-- Nunca compartilhe a chave secreta ou o IV
-- Para produção, considere gerar IVs aleatórios para cada criptografia
+- The secret key must be exactly 32 characters/bytes
+- The IV (Initialization Vector) should be unique for each encryption operation
+- Never share the secret key or IV
+- For production, consider generating random IVs for each encryption
 
-## Compilação
+## Compilation
 
-Para compilar o executável:
+To compile the executable:
 
 ```bash
 go build -o encrypt-decrypt main.go
 ```
 
-## Licença
+## License
 
-Este projeto é para fins educacionais e demonstrativos.
+This project is for educational and demonstration purposes only.
