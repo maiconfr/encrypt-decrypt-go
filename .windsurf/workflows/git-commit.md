@@ -1,11 +1,15 @@
 ---
 description: Realizar commit no Git
+auto_execution_mode: 1
 ---
 
 ---
 name: git-commit
 description: Workflow para realizar commits no Git com verificação de status e mensagem padronizada
 ---
+
+## Identificar idioma para o repositório
+1. Pergunte qual idioma deseja realizar o comentário do commit
 
 ## Verificar status do repositório
 1. Verifica o status atual do repositório Git
