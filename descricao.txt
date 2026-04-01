@@ -1,0 +1,44 @@
+Descrição do Projeto Encrypt-Decrypt Go
+
+Este projeto implementa um sistema de criptografia e descriptografia de texto usando o algoritmo AES (Advanced Encryption Standard) no modo CFB (Cipher Feedback).
+
+Como o código funciona:
+
+1. ARQUIVO PRINCIPAL (main.go):
+   - Carrega variáveis de ambiente do arquivo .env usando godotenv
+   - Obtém a chave secreta (MySecret) do ambiente
+   - Define um vetor de inicialização (IV) fixo de 16 bytes
+   - Demonstra criptografia da string "Encrypting this string"
+   - Demonstra descriptografia de um exemplo hardcoded
+   - Exibe os resultados no console
+
+2. MÓDULO DE CRIPTOGRAFIA (functions/encrypting.go):
+   - Função Encrypt(): recebe texto, chave secreta e IV
+   - Cria um cipher AES usando a chave secreta
+   - Usa modo CFB para criptografar o texto
+   - Codifica o resultado em Base64 para transporte seguro
+   - Função Encode(): converte bytes para string Base64
+
+3. MÓDULO DE DESCRIPTOGRAFIA (functions/decrypting.go):
+   - Função Decrypt(): recebe texto criptografado, chave secreta e IV
+   - Cria um cipher AES usando a mesma chave secreta
+   - Decodifica o texto de Base64 para bytes
+   - Usa modo CFB para descriptografar os dados
+   - Retorna o texto original
+   - Função Decode(): converte string Base64 para bytes
+
+Características técnicas:
+- Algoritmo: AES-256 (requer chave de 32 bytes)
+- Modo de operação: CFB (Cipher Feedback)
+- IV: 16 bytes (vetor de inicialização)
+- Encoding: Base64 para representação segura
+- Dependências: pacotes crypto/aes, crypto/cipher, encoding/base64
+
+Fluxo de execução:
+1. Carrega configuração do arquivo .env
+2. Criptografa texto de exemplo
+3. Exibe resultado criptografado
+4. Descriptografa texto de exemplo
+5. Exibe resultado descriptografado
+
+O projeto serve como demonstração educacional dos conceitos básicos de criptografia simétrica em Go.
