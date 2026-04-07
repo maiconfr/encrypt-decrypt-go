@@ -7,6 +7,8 @@ A simple Go project to demonstrate text encryption and decryption using AES (Adv
 - **Encryption**: Encrypts text using AES-256 with CFB mode
 - **Decryption**: Decrypts text back to its original format
 - **Base64 Encoding**: Encodes encrypted result in Base64 for secure transport
+- **OpenTelemetry Integration**: Comprehensive observability with traces and metrics
+- **Performance Monitoring**: Built-in timing and performance metrics
 - **Comprehensive Testing**: 100% code coverage with unit tests and benchmarks
 - **Performance Optimized**: Benchmarks showing 500K+ operations per second
 - **Automation Workflows**: Git and testing automation for development workflow
@@ -19,12 +21,15 @@ encrypt-decrypt-go/
 ├── main.go              # Main file with usage example
 ├── main_test.go         # Unit tests and benchmarks for main package
 ├── functions/
-│   ├── encrypting.go    # Encryption functions
-│   ├── decrypting.go    # Decryption functions
+│   ├── encrypting.go    # Encryption functions with telemetry
+│   ├── decrypting.go    # Decryption functions with telemetry
 │   └── functions_test.go # Unit tests with 100% coverage
+├── telemetry/
+│   └── telemetry.go     # OpenTelemetry configuration and utilities
 ├── go.mod              # Go module
 ├── go.sum              # Dependencies
 ├── .env                # Environment variables (not included in repository)
+├── .env.example        # Example environment variables
 ├── .gitignore          # Git ignore rules
 └── .windsurf/
     └── workflows/      # Automation workflows
@@ -51,8 +56,73 @@ go mod tidy
 ```
 
 3. Create a `.env` file with your secret key:
+```bash
+cp .env.example .env
+# Edit .env with your configuration
 ```
-MySecret=your-secret-key-here-must-be-32-bytes
+
+
+## OpenTelemetry Observability
+
+This application includes comprehensive OpenTelemetry integration for monitoring and observability.
+
+### Telemetry Features
+
+- **Distributed Tracing**: End-to-end tracing of encryption and decryption operations
+- **Performance Metrics**: Automatic timing and duration measurements
+- **Event Logging**: Detailed events for each operation step
+- **Error Tracking**: Automatic error recording and span status updates
+- **Attribute Enrichment**: Contextual metadata for better observability
+
+### Configuration
+
+The telemetry can be configured via environment variables:
+
+```bash
+# Disable OpenTelemetry (useful for production or testing)
+OTEL_SDK_DISABLED=true
+
+# Custom OTLP endpoint (for production monitoring)
+OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4317
+OTEL_EXPORTER_OTLP_HEADERS=authorization=Bearer your-token
+```
+
+### Telemetry Output
+
+By default, telemetry data is exported to stdout in JSON format. Each execution produces:
+
+- **Spans**: Complete trace of operations with timing
+- **Events**: Key moments during encryption/decryption
+- **Attributes**: Metadata like algorithm, text lengths, durations
+- **Metrics**: Performance measurements and error rates
+
+Example output:
+```json
+{
+  "Name": "encryption.encrypt",
+  "SpanKind": "Internal",
+  "StartTime": "2026-04-01T11:45:28.914883361-03:00",
+  "EndTime": "2026-04-01T11:45:28.914920369-03:00",
+  "Attributes": [
+    {"Key": "encryption.algorithm", "Value": {"Type": "STRING", "Value": "AES"}},
+    {"Key": "encryption.duration_ms", "Value": {"Type": "FLOAT64", "Value": 0.037008}}
+  ]
+}
+```
+
+### Integration with Monitoring Systems
+
+For production use, configure OpenTelemetry to export to your monitoring system:
+
+```bash
+# Jaeger
+OTEL_EXPORTER_JAEGER_ENDPOINT=http://jaeger:14250/api/traces
+
+# Prometheus
+OTEL_EXPORTER_PROMETHEUS_ENDPOINT=http://prometheus:9090
+
+# Generic OTLP
+OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317
 ```
 
 ## Usage
